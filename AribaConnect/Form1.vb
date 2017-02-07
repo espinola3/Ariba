@@ -40,17 +40,25 @@ Public Class Form1
                         Test_Path)
             MyReader.TextFieldType = FileIO.FieldType.Delimited
             MyReader.SetDelimiters(",")
+            Dim ADAO1 As New AribaPRI
             Dim currentRow As String()
+            Dim columna As String()
+            Dim x As Integer
+            x = 0
+
             While Not MyReader.EndOfData
                 Try
                     currentRow = MyReader.ReadFields()
                     Dim currentField As String
                     For Each currentField In currentRow
+                        columna(x)
                         'MsgBox(currentField)'
-
+                        x = x + 1
                     Next
+                    Dim newId As Integer = ADAO1.insertFile(columna(0), columna(1), columna(2), columna(3), columna(4), columna(5), columna(6), columna(7), CDbl(columna(8)), columna(9)(8), columna(9),
+                                                            columna(10), columna(11), CInt(columna(12)), columna(13), columna(14), columna(15), columna(16), columna(17), columna(18), CDate(columna(19)))
                 Catch ex As Microsoft.VisualBasic.
-                            FileIO.MalformedLineException
+        FileIO.MalformedLineException
                     MsgBox("Line " & ex.Message &
                     "is not valid and will be skipped.")
                 End Try
