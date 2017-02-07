@@ -21,7 +21,7 @@ Public Class AribaPRI
                 Using cm As SqlClient.SqlCommand = New SqlClient.SqlCommand("insertFile", conn)
                     cm.CommandType = CommandType.StoredProcedure
                     cm.Parameters.Add("@ChangeCode", SqlDbType.Char, 1).Value = Left(ChangeCode & Space(1), 1).Trim
-                    cm.Parameters.Add("@@SKU", SqlDbType.Char, 7).Value = Left(SKU & Space(7), 7).Trim
+                    cm.Parameters.Add("@SKU", SqlDbType.Char, 7).Value = Left(SKU & Space(7), 7).Trim
                     cm.Parameters.Add("@VPN", SqlDbType.VarChar, 20).Value = Left(VPN & Space(20), 20).Trim
                     cm.Parameters.Add("@Description1", SqlDbType.VarChar, 31).Value = Left(Description1 & Space(31), 31).Trim
                     cm.Parameters.Add("@Description2", SqlDbType.VarChar, 35).Value = Left(Description2 & Space(35), 35).Trim
@@ -32,8 +32,8 @@ Public Class AribaPRI
                     cm.Parameters.Add("@UnitsOfMeasure", SqlDbType.VarChar, 2).Value = Left(UnitsOfMeasure & Space(2), 2).Trim
                     cm.Parameters.Add("@VendorName", SqlDbType.VarChar, 20).Value = Left(VendorName & Space(20), 20).Trim
                     cm.Parameters.Add("@SubVendorName", SqlDbType.VarChar, 35).Value = Left(SubVendorName & Space(35), 35).Trim
-                    cm.Parameters.Add("@BackOrder", SqlDbType.Char, 1).Value = Left(Stock & Space(1), 1).Trim
-                    cm.Parameters.Add("@Stock", SqlDbType.Int, 10).Value = Left(BackOrder & Space(10), 10).Trim
+                    cm.Parameters.Add("@BackOrder", SqlDbType.Char, 1).Value = Left(BackOrder & Space(1), 1).Trim
+                    cm.Parameters.Add("@Stock", SqlDbType.Int, 10).Value = Left(Stock & Space(10), 10).Trim
                     cm.Parameters.Add("@SKUClass", SqlDbType.Char, 1).Value = Left(SKUClass & Space(1), 1).Trim
                     cm.Parameters.Add("@CRC", SqlDbType.VarChar, 20).Value = Left(CRC & Space(20), 20).Trim
                     cm.Parameters.Add("@Comp_IH_SW", SqlDbType.Char, 1).Value = Left(Comp_IH_SW & Space(1), 1).Trim
@@ -41,8 +41,10 @@ Public Class AribaPRI
                     cm.Parameters.Add("@VendorNumber", SqlDbType.Char, 4).Value = Left(VendorNumber & Space(4), 4).Trim
                     cm.Parameters.Add("@MediaCode", SqlDbType.Char, 4).Value = Left(MediaCode & Space(4), 4).Trim
                     cm.Parameters.Add("@DateInsert", SqlDbType.Date).Value = DateInsert
+                    cm.Parameters.Add("@@id", SqlDbType.Int).Direction = ParameterDirection.Output
                     Try
                         res = cm.ExecuteNonQuery()
+                        'id = CInt(cm.Parameters("@@id").Value.ToString)'
 
                     Catch ex As Exception
                         res = -1

@@ -104,7 +104,7 @@ Public Class Form1
         Dim ADAO1 As New AribaPRI
 
 
-        Dim newId As Integer = ADAO1.insertFile("A", "B090113", "18617", "CAMERA STAND METAL", "F/ 200/200+/2100/2120/2420",
+        Dim newId As Integer = ADAO1.insertFile("A", "B090003", "18617", "CAMERA STAND METAL", "F/ 200/200+/2100/2120/2420",
                                                "1926", "ExtCat", "CatType", CDbl("0000020.31"), "EA", "AXIS", "AXIS COMMUNICATION",
                                                "Y", 0, "S", "STD", " ", " ", "7245", "ACCS", Date.Parse("2017-02-06"))
 
