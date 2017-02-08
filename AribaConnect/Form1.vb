@@ -44,9 +44,10 @@ Public Class Form1
             Dim currentRow As String()
             Dim columna(19) As String
             Dim x As Integer
-            x = 0
+
 
             While Not MyReader.EndOfData
+                x = 0
                 Try
                     currentRow = MyReader.ReadFields()
                     Dim currentField As String
@@ -58,8 +59,8 @@ Public Class Form1
 
                     Next
 
-                    Dim newId As Integer = ADAO1.insertFile(columna(0), columna(1), columna(2), columna(3), columna(4), columna(5), columna(6), columna(7), CDbl(columna(8)), columna(9)(8), columna(9),
-                                                            columna(10), columna(11), CInt(columna(12)), columna(13), columna(14), columna(15), columna(16), columna(17), columna(18), CDate(columna(19)))
+                    Dim newId As Integer = ADAO1.insertFile(columna(0), columna(1), columna(2), columna(3), columna(4), columna(5), "", "", CDbl(columna(6)), columna(7), columna(8),
+                                                            columna(9), columna(10), CInt(columna(11)), columna(12), columna(13), columna(14), columna(15), columna(16), columna(17), Date.Now)
                 Catch ex As Microsoft.VisualBasic.
         FileIO.MalformedLineException
                     MsgBox("Line " & ex.Message &
