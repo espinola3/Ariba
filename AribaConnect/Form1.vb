@@ -4,7 +4,7 @@ Option Strict On
 Imports AribaSQL
 
 Public Class Form1
-    Private Test_Path As String = "N:\eCommerce\Aplicaciones Locales\AribaCatalog\CSV_TEST\PRICARIF.TXT"
+    Private Test_Path As String = ""
 
 
     Private CSV_Path As String = ""
@@ -84,7 +84,7 @@ Public Class Form1
         If Me.CSV_Path = "" Then
             Exit Sub
         Else
-            Me.lblCSVPath.Text = CSV_Path
+            'Me.lblCSVPath.Text = CSV_Path
         End If
 
 
@@ -105,7 +105,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub lblCSVPath_Click(sender As System.Object, e As System.EventArgs) Handles lblCSVPath.Click
+    Private Sub lblCSVPath_Click(sender As System.Object, e As System.EventArgs)
 
     End Sub
 
@@ -119,6 +119,19 @@ Public Class Form1
         Dim newId As Integer = ADAO1.insertFile("A", "B090003", "18617", "CAMERA STAND METAL", "F/ 200/200+/2100/2120/2420",
                                                "1926", "ExtCat", "CatType", CDbl("0000020.31"), "EA", "AXIS", "AXIS COMMUNICATION",
                                                "Y", 0, "S", "STD", " ", " ", "7245", "ACCS", Date.Parse("2017-02-06"))
+
+    End Sub
+
+    Private Sub Button3_Click(sender As System.Object, e As System.EventArgs) Handles Button3.Click
+        OpenFileDialog1.ShowDialog()
+
+    End Sub
+
+    Private Sub OpenFileDialog1_FileOk(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles OpenFileDialog1.FileOk
+        TextBox1.Text = OpenFileDialog1.FileName
+        Test_Path = TextBox1.Text
+
+
 
     End Sub
 End Class
