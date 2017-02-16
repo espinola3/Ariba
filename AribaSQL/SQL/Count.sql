@@ -1,0 +1,1 @@
+select COUNT(SKU) from dbo.[PriceFile-29005207]
