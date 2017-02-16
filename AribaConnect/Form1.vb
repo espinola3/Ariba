@@ -33,7 +33,7 @@ Public Class Form1
         Public DateInsert As Date
     End Class
 
-    Private Function Recollect_Data(ByVal Test_Path As String) As Integer
+    Public Function Recollect_Data(ByVal Test_Path As String) As Integer
         Dim loading As Integer
         Dim tiempoInicial As Date
         tiempoInicial = DateTime.Now
@@ -94,17 +94,18 @@ Public Class Form1
                             CatType = Nothing
                         Else
                             CatType = "UNSPSC"
-                        End If
-                        If columna(4).Length = 35 Then
-                            columna(4) = columna(4).Substring(0, 33)
-                        End If
-                        'Me.Label1.Text = CStr(loading)
-                        Dim newId As Integer = ADAO1.insertFile(columna(0), columna(1), columna(2), columna(3), columna(4), columna(5), UNSPSC, CatType, CDbl(columna(6)), columna(7), columna(8),
-                                                                columna(9), columna(10), CInt(columna(11)), columna(12), columna(13), columna(14), columna(15), columna(16), columna(17), Date.Now, conn)
-                        loading = loading + 1
+                            If columna(4).Length = 35 Then
+                                columna(4) = columna(4).Substring(0, 33)
+                            End If
+                            'Me.Label1.Text = CStr(loading)
+                            Dim newId As Integer = ADAO1.insertFile(columna(0), columna(1), columna(2), columna(3), columna(4), columna(5), UNSPSC, CatType, CDbl(columna(6)), columna(7), columna(8),
+                                                                    columna(9), columna(10), CInt(columna(11)), columna(12), columna(13), columna(14), columna(15), columna(16), columna(17), Date.Now, conn)
+                            loading = loading + 1
 
-                        Me.Label2.Text = CStr(loading)
-                        Application.DoEvents()
+                            Me.Label2.Text = CStr(loading)
+                            Application.DoEvents()
+                        End If
+                        
 
 
 
@@ -118,11 +119,10 @@ Public Class Form1
                 Return 1
             End Using
             conn.Close()
-            Dim tiempoFinal As Date = DateTime.Now
-            Dim total = New TimeSpan(tiempoFinal.Ticks - tiempoInicial.Ticks)
-            Me.Label2.Text = total.ToString()
-        End Using
+            
 
+        End Using
+        Application.Exit()
     End Function
 
 
@@ -133,8 +133,8 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
 
-        Me.CSV_Path = IniFile.getIniParameter("PATHS", "CSV_PATH", "")
-        If Me.CSV_Path = "" Then
+        Me.CSV_PATH = IniFile.getIniParameter("PATHS", "CSV_PATH", "")
+        If Me.CSV_PATH = "" Then
             Exit Sub
         Else
             'Me.lblCSVPath.Text = CSV_Path
@@ -163,7 +163,7 @@ Public Class Form1
     Private Sub lblCSVPath_Click(sender As System.Object, e As System.EventArgs)
 
     End Sub
-    
+
 
     Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click
 
@@ -171,14 +171,19 @@ Public Class Form1
         Dim WeekDayNbr As Integer
         DateNow = Date.Now
         WeekDayNbr = Weekday(DateNow)
-        Test_Path = "M:\USER\COMUN\EDI\PRICEFILES\29005207_AT55D7\" + CStr(WeekDayNbr - 1) + "\PRICARIF.TXT"
+        If CInt(WeekDayNbr) = (7 Or 1) Then
+            WeekDayNbr = 6
+        Else
+            Test_Path = "M:\USER\COMUN\EDI\PRICEFILES\29005207_AT55D7\" + CStr(WeekDayNbr - 1) + "\PRICARIF.TXT"
 
-        Dim result As Integer = Me.Recollect_Data(Test_Path)
+            Dim result As Integer = Me.Recollect_Data(Test_Path)
 
-        If result = 1 Then
-            MsgBox("El proceso se ha realizado con éxito!")
+            If result = 1 Then
+                MsgBox("El proceso se ha realizado con éxito!")
 
+            End If
         End If
+
 
 
     End Sub
