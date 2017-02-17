@@ -8,7 +8,7 @@ Public Class AribaPRI
 
     Public Function insertFile(ByVal ChangeCode As String, ByVal SKU As String, ByVal VPN As String, ByVal Description1 As String,
                                    ByVal Description2 As String, ByVal CatSubCat As String, ByVal ExternalCategory As String, ByVal CatType As String,
-                                   ByVal CustPrice As Double, ByVal UnitsOfMeasure As String, ByVal VendorName As String, ByVal SubVendorName As String,
+                                   ByVal CustPrice As Double, ByVal UnitsOfMeasure As String, ByVal LeadTime As Byte, ByVal VendorName As String, ByVal SubVendorName As String,
                                    ByVal BackOrder As String, ByVal Stock As Integer, ByVal SKUClass As String, ByVal CRC As String, ByVal Comp_IH_SW As String,
                                    ByVal SKUType As String, ByVal VendorNumber As String, ByVal MediaCode As String, ByVal DateInsert As Date, conn As SqlClient.SqlConnection) As Integer
 
@@ -18,7 +18,7 @@ Public Class AribaPRI
         Try
             'Using conn As SqlClient.SqlConnection = New SqlClient.SqlConnection(Me._StringConnection)
             'conn.Open()
-            
+
 
             Using cm As SqlClient.SqlCommand = New SqlClient.SqlCommand("insertFile", conn)
                 cm.CommandType = CommandType.StoredProcedure
@@ -32,6 +32,7 @@ Public Class AribaPRI
                 cm.Parameters.Add("@CatType", SqlDbType.VarChar, 20).Value = Left(CatType & Space(20), 20).Trim
                 cm.Parameters.Add("@CustPrice", SqlDbType.Money, 10).Value = Left(CustPrice & Space(10), 10).Trim
                 cm.Parameters.Add("@UnitsOfMeasure", SqlDbType.VarChar, 2).Value = Left(UnitsOfMeasure & Space(2), 2).Trim
+                cm.Parameters.Add("@LeadTime", SqlDbType.TinyInt, 8).Value = Left(LeadTime & Space(10), 10).Trim
                 cm.Parameters.Add("@VendorName", SqlDbType.VarChar, 20).Value = Left(VendorName & Space(20), 20).Trim
                 cm.Parameters.Add("@SubVendorName", SqlDbType.VarChar, 35).Value = Left(SubVendorName & Space(35), 35).Trim
                 cm.Parameters.Add("@BackOrder", SqlDbType.Char, 1).Value = Left(BackOrder & Space(1), 1).Trim

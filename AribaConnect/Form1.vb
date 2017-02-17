@@ -52,7 +52,6 @@ Public Class Form1
                             columna(x) = ""
                             columna(x) = currentField
                             x = x + 1
-                            'MsgBox(currentField)'
                             If (x = 6) Then
                                 query = "select [UNSPSC_Customer] from [dbo].[CatSubCat_UNSPSC_29005207] where [CatSubCat_IM]=" + currentField
                                 Using cm3 As SqlClient.SqlCommand = New SqlClient.SqlCommand(query, conn)
@@ -73,8 +72,13 @@ Public Class Form1
                             If columna(4).Length = 35 Then
                                 columna(4) = columna(4).Substring(0, 33)
                             End If
-                            'Me.Label1.Text = CStr(loading)
-                            Dim newId As Integer = ADAO1.insertFile(columna(0), columna(1), columna(2), columna(3), columna(4), columna(5), UNSPSC, CatType, CDbl(columna(6)), columna(7), columna(8),
+                            columna(18) = "1"
+                            If columna(14) = "J" Then
+                                columna(18) = "3"
+                                'Me.Label1.Text = CStr(loading)
+                            End If
+                            columna(6) = columna(6).Replace(".", ",")
+                            Dim newId As Integer = ADAO1.insertFile(columna(0), columna(1), columna(2), columna(3), columna(4), columna(5), UNSPSC, CatType, CDbl(columna(6)), columna(7), CByte(columna(18)), columna(8),
                                                                     columna(9), columna(10), CInt(columna(11)), columna(12), columna(13), columna(14), columna(15), columna(16), columna(17), Date.Now, conn)
                             loading = loading + 1
 
