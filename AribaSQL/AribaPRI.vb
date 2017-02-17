@@ -3,7 +3,7 @@
 Public Class AribaPRI
 
 
-    Private _StringConnection As String = "Data Source=172.31.16.152;Initial Catalog=ARIBA;Trusted_Connection=True;"
+    Private _StringConnection As String = "Data Source=172.31.16.152;Initial Catalog=ARIBA;user id=usr_ecom_write;password=LunLN6yI;"
 
 
     Public Function insertFile(ByVal ChangeCode As String, ByVal SKU As String, ByVal VPN As String, ByVal Description1 As String,

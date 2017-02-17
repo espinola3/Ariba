@@ -5,33 +5,9 @@ Imports AribaSQL
 
 Public Class Form1
     Private Test_Path As String = ""
-    Private _StringConnection As String = "Data Source=172.31.16.152;Initial Catalog=ARIBA;Trusted_Connection=True;"
+    Private _StringConnection As String = "Data Source=172.31.16.152;Initial Catalog=ARIBA;user id=usr_ecom_write;password=LunLN6yI;"
     Private CSV_PATH As String = ""
-
-
-    Public Class Line 
-        Public ChangeCode As String
-        Public SKU As String
-        Public VPN As String
-        Public Description1 As String
-        Public Description2 As String
-        Public CatSubCat As String
-        Public ExternalCategory As String
-        Public CatType As String
-        Public CustPrice As Double
-        Public UnitsOfMeasure As String
-        Public VendorName As String
-        Public SubVendorName As String
-        Public BackOrder As String
-        Public Stock As Integer
-        Public SKUClass As String
-        Public CRC As String
-        Public Comp_IH_SW As String
-        Public SKUType As String
-        Public VendorNumber As String
-        Public MediaCode As String
-        Public DateInsert As Date
-    End Class
+    Dim thread As System.Threading.Thread
 
     Public Function Recollect_Data(ByVal Test_Path As String) As Integer
         Dim loading As Integer
@@ -62,7 +38,7 @@ Public Class Form1
                 Dim currentRow As String()
                 Dim columna(19) As String
                 Dim x As Integer
-                Dim UNSPSC As String
+                Dim UNSPSC As String = " "
                 Dim CatType As String
                 Dim query As String
 
@@ -105,7 +81,7 @@ Public Class Form1
                             Me.Label2.Text = CStr(loading)
                             Application.DoEvents()
                         End If
-                        
+
 
 
 
@@ -119,7 +95,7 @@ Public Class Form1
                 Return 1
             End Using
             conn.Close()
-            
+
 
         End Using
         Application.Exit()
@@ -133,6 +109,8 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
 
+        Me.Show()
+
         Me.CSV_PATH = IniFile.getIniParameter("PATHS", "CSV_PATH", "")
         If Me.CSV_PATH = "" Then
             Exit Sub
@@ -140,12 +118,28 @@ Public Class Form1
             'Me.lblCSVPath.Text = CSV_Path
         End If
 
+        Dim DateNow As Date
+        Dim WeekDayNbr As Integer
+        DateNow = Date.Now
+        WeekDayNbr = Weekday(DateNow)
+        If CInt(WeekDayNbr) = (7 Or 1) Then
+            WeekDayNbr = 6
+        Else
+            Test_Path = "M:\USER\COMUN\EDI\PRICEFILES\29005207_AT55D7\" + CStr(WeekDayNbr - 1) + "\PRICARIF.TXT"
+
+            Dim result As Integer = Me.Recollect_Data(Test_Path)
+
+            If result = 1 Then
+                Application.Exit()
+
+            End If
+        End If
 
     End Sub
 
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
 
-        Form2.Show()
+        'Form2.Show()
         'Dim ADAO As New AribaDAO
 
 
@@ -157,7 +151,7 @@ Public Class Form1
         'Dim res As Integer = ADAO.SimpleSelect(strSql, dt)
 
         'End If
-
+        End
     End Sub
 
     Private Sub lblCSVPath_Click(sender As System.Object, e As System.EventArgs)
@@ -179,7 +173,7 @@ Public Class Form1
             Dim result As Integer = Me.Recollect_Data(Test_Path)
 
             If result = 1 Then
-                MsgBox("El proceso se ha realizado con éxito!")
+                Application.Exit()
 
             End If
         End If
